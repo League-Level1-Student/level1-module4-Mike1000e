@@ -60,8 +60,9 @@ public class SimonSays extends KeyAdapter {
 			 showImage();
 			 speak("CORRECT");
 		 }else if(e.getKeyCode() == imageIndex && simonSays == false){
-			 speak("WRONG!");
+			
 			 tries++;
+			 speak("WRONG!");
 			 showImage();
 		 }else if(e.getKeyCode() != imageIndex && simonSays == false){
 			 speak("CORRECT!");
@@ -69,9 +70,10 @@ public class SimonSays extends KeyAdapter {
 			 tries++;
 			 showImage();
 		 }else {
-			 speak("Wrong");
+			
 			 tries++;
 			 showImage();
+			 speak("Wrong");
 			 if(tries>9) {
 				System.exit(0);
 			 }
