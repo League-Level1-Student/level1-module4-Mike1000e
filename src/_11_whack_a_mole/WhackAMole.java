@@ -3,59 +3,63 @@ package _11_whack_a_mole;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
+import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class WhackAMole implements ActionListener {
 	static JFrame frame = new JFrame();
 	static JPanel panel = new JPanel();
-	
+	int moleskilled;
+	int epicFail;
+	static WhackAMole mole = new WhackAMole();
+	int whatButton;
+	Random ran;
+	static Date time;
 	public static void main(String[] args) {
 		
-		for(int i = 0; i<24; i++) {	
-			
-			 JButton button1 = new JButton();
-			 button1.setPreferredSize(new Dimension(50, 25));
-			 panel.setPreferredSize(new Dimension(200,250));
-			 frame.setTitle("Whack a MOLE!");
-					 panel.add(button1);
-			 frame.add(panel);
-			 frame.setVisible(true);
-			 frame.pack();
-	}
-		WhackAMole mole = new WhackAMole();
-		
-		mole.speak("Bro Mike sucks at code");
+		 
+
+	
+		mole.addListener();
+		time = new Date();
 }
 	
 	
 	
 	public void addListener() {
+		 panel.setPreferredSize(new Dimension(400,250));
+		 frame.setTitle("Whack a MOLE!");
+		 frame.add(panel);
+		 frame.setVisible(true);
+		 frame.pack();
+		 ran = new Random();
+		 whatButton = ran.nextInt(25);
 		
 		for(int i = 0; i<24; i++) {	
-			
+			 if(i==whatButton) {
+				 JButton button2 = new JButton();
+				 button2.setPreferredSize(new Dimension(100, 25));
+				 button2.addActionListener(this);
+				 panel.add(button2);
+				 button2.setText("mole!");
+				 
+			 }else{
 			 JButton button1 = new JButton();
-			 button1.setPreferredSize(new Dimension(50, 25));
-			 panel.setPreferredSize(new Dimension(200,250));
-			 frame.setTitle("Whack a MOLE!");
+			 button1.setPreferredSize(new Dimension(100, 25));
 			 button1.addActionListener(this);
 			 panel.add(button1);
-			 frame.add(panel);
-			 frame.setVisible(true);
-			 frame.pack();
-			 
-	}
-		WhackAMole mole = new WhackAMole();
+		}
+			
+			}
 		
 	
 		
-		
-		
-		
-		
-	}
+}
     static void speak(String words) {
         if( System.getProperty( "os.name" ).contains( "Windows" ) ) {
             String cmd = "PowerShell -Command \"Add-Type -AssemblyName System.Speech; (New-Object System.Speech.Synthesis.SpeechSynthesizer).Speak('"
@@ -79,7 +83,34 @@ public class WhackAMole implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+		JButton buttonClicked = (JButton) e.getSource();
+		if(buttonClicked.getText().equals("mole!")) {
+			speak("you killed it man");
+			panel.removeAll();
+			mole.addListener();
+			moleskilled++;
+			}else {
+				
+				speak("you missed loser");
+				epicFail++;
+				panel.removeAll();
+				mole.addListener();
+				if(epicFail>5) {
+				mole.endGame(time, moleskilled);	
+					
+					
+				}
+				
+				
+				
+				
+			}
+	}
+	private void endGame(Date timeAtStart, int molesWhacked) { 
+	    Date timeAtEnd = new Date();
+	    JOptionPane.showMessageDialog(null, "Your whack rate is "
+	            + ((timeAtEnd.getTime() - timeAtStart.getTime()) / 1000.00 / molesWhacked)
+	                  + " moles per second.");
 	}
 
 }
