@@ -85,7 +85,7 @@ public class WhackAMole implements ActionListener {
 		// TODO Auto-generated method stub
 		JButton buttonClicked = (JButton) e.getSource();
 		if(buttonClicked.getText().equals("mole!")) {
-			speak("you killed it man");
+			speak("you killed the mole");
 			panel.removeAll();
 			mole.addListener();
 			moleskilled++;
@@ -95,7 +95,7 @@ public class WhackAMole implements ActionListener {
 				epicFail++;
 				panel.removeAll();
 				mole.addListener();
-				if(epicFail>5) {
+				if(epicFail>2) {
 				mole.endGame(time, moleskilled);	
 					
 					
